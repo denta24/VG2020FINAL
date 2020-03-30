@@ -607,7 +607,7 @@ export default class Productpage extends Component {
       return (
         <div key={item.id} className="item">
           <div className="item__picture">
-            <Link to={linkProps}>
+            <Link target="_blank" to={linkProps}>
               <img
                 className="item__imgPicture"
                 src={item.imgSrc[0]}
@@ -889,7 +889,7 @@ export default class Productpage extends Component {
                   if (this.state.page > 1) {
                     const page = this.state.page - 1;
                     this.setState({ page });
-                    document.body.scrollTo(0, 0);
+                    window.scroll(0, 0);
                   }
                 }}
                 className="number-page__container"
@@ -904,7 +904,7 @@ export default class Productpage extends Component {
                   if (this.state.page < numberOfPages) {
                     const page = this.state.page + 1;
                     this.setState({ page });
-                    document.body.scrollTo(0, 0);
+                    window.scroll(0, 0);
                   }
                 }}
                 className="number-page__container"

@@ -101,6 +101,8 @@ tr:hover {
   flex-basis: 50%;
   margin: 5px;
   padding: 5px;
+  max-width: 50vw;
+  overflow: auto;
 }
 .adminOrder__cart-info {
   margin: auto;

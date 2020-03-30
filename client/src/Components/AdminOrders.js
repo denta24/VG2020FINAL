@@ -9,16 +9,21 @@ export default class AdminOrders extends Component {
     console.log("działa");
     this.setState({ item });
     const info = document.querySelector(".adminOrder");
-    const infoPosition =
-      document.body.scrollTop +
-      info.getBoundingClientRect().top -
-      document.body.offsetHeight * 0.1;
-    console.log(infoPosition);
+    // const infoPosition =
+    //   document.body.scrollTop +
+    //   info.getBoundingClientRect().top -
+    //   document.body.offsetHeight * 0.1;
 
-    document.body.scrollTo({
-      top: infoPosition,
-      behavior: "smooth"
-    });
+    const infoPosition =
+      info.getBoundingClientRect().top - window.innerHeight * 0.1;
+
+    console.log(infoPosition);
+    window.scrollBy(0, infoPosition);
+
+    // document.body.scrollTo({
+    //   top: infoPosition,
+    //   behavior: "smooth"
+    // });
   };
 
   loadItem = () => {
@@ -27,7 +32,7 @@ export default class AdminOrders extends Component {
       .then(res => {
         const { orders } = res.orders;
         const item = orders[orders.length - 1];
-        console.log(orders);
+        console.log(res);
         this.setState({
           orders,
           isLoaded: true,
@@ -45,7 +50,7 @@ export default class AdminOrders extends Component {
       const items = this.state.orders;
       const { customerInfo, cart } = this.state.item;
 
-      const listOfProducts = items.map((item,index) => {
+      const listOfProducts = items.map((item, index) => {
         let sum = 0;
 
         item.cart.forEach(i => {
@@ -58,7 +63,8 @@ export default class AdminOrders extends Component {
               onClick={() => {
                 this.handleListClick(item);
               }}
-            ><th>{index}</th>
+            >
+              <th>{index}</th>
               <th>{item.customerInfo.name}</th>
               <th>{item.customerInfo.surname}</th>
               <th>{item.customerInfo.city}</th>
@@ -173,6 +179,12 @@ export default class AdminOrders extends Component {
                 </div>{" "}
                 <div className="adminOrder__singleTableRow">
                   {suma.toFixed(2)} PLN
+                </div>
+              </div>
+              <div className="adminOrder__singleTableColumn">
+                <div className="adminOrder__singleTableRow">Uwagi:</div>
+                <div className="adminOrder__singleTableRow">
+                  {customerInfo.uwagi}
                 </div>
               </div>
             </div>

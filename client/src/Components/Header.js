@@ -37,7 +37,9 @@ export default function Header() {
           <div className="txtContainer">
             <span className="txt">Witamy u nas</span>
             <p></p>
-            <button className="header__button">SPRAWDŹ</button>
+            <a href="/kobiety">
+              <button className="header__button">SPRAWDŹ</button>
+            </a>
           </div>
           <div className="transp"></div>
         </header>

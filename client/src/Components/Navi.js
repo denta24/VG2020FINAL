@@ -98,7 +98,6 @@ export default function Navi() {
       </nav>
 
       <div className="nav-options">
-        <div style={{ height: "6vh" }}></div>
 
         <ul className="elementsList">
           {navCat}

@@ -90,28 +90,30 @@ export default class Cart extends Component {
     }
     const form = document.querySelector(".orderForm");
     const formPosition =
-      document.body.scrollTop +
-      form.getBoundingClientRect().top -
-      window.innerHeight * 0.1;
-    console.log(formPosition);
+      form.getBoundingClientRect().top - window.innerHeight * 0.25;
 
-    document.body.scrollTo({
-      top: formPosition,
-      behavior: "smooth"
-    });
+    console.log(formPosition);
+    window.scrollBy(0, formPosition);
+
+    // document.body.scroll({
+    //   top: formPosition,
+    //   behavior: "smooth"
+    // });
   };
   sendToBackEnd = () => {
     const { cart, customerInfo } = this.state;
     const now = new Date();
     const dat1 = now.toString();
     const date = dat1.slice(0, 24);
-
+    const uwagi = document.getElementById("uwagi").value;
+    if (uwagi) {
+      customerInfo.uwagi = uwagi;
+    } else customerInfo.uwagi = "brak";
     const data = {
       cart,
       customerInfo,
       date
     };
-    console.log(data);
 
     if (cart.length !== "") {
       fetch("/api/newOrder", {
@@ -158,20 +160,28 @@ export default class Cart extends Component {
             <span className="Text text__delivery">
               Sprawdź poprawność danych
             </span>
-            {`${name}`}
-            {`${surname}`}
+            <div className="orderCheck">
+              {`${name} `}
+              {`${surname}`}
+              <br />
+              {street} {numberStreet}
+              <br />
+              {`${adressCode}`} {`${city}`}
+              <br />
+              {`${telephone}`}
+              <br />
+              {`${email}`}
+              <br />
+              {`${deliveryMethod}`}
+              <br />
+            </div>
             <br />
-            {street} {numberStreet}
             <br />
-            {`${adressCode}`}
-            {`${city}`}
             <br />
-            {`${telephone}`}
+            Uwagi:
             <br />
-            {`${email}`}
-            <br />
-            {`${deliveryMethod}`}
-            <br />
+            <textarea id="uwagi" rows="4" cols="50"></textarea>
+            <br></br>
             <button
               onClick={() => {
                 const orderMove = document.querySelector(".form-containers");
@@ -182,19 +192,34 @@ export default class Cart extends Component {
               wróć
             </button>
           </div>
-          <div className="orderForm__delivery">
-            <span className="deliveryInfo">
-              Dostawę zamówionych produktów realizujemy za pośrednictwem firmy
-              kurierskiej DPD <br />
-              <br />
-              Koszt przesyłki naliczamy zgodnie z taryfikatorem: <br />
-              <br />
-              <b>13,99 zł</b> przesyłka za wcześniejszym przelewem na konto
-              <br /> <b>21,99 zł</b> przesyłka pobraniowa
-              <br />
-              <br /> W przypadku wysyłki za granicę koszt zgodnie z cennikiem
-              Poczty Polskiej.
-            </span>
+          <div className="orderForm__delivery orderForm__delivery--pay">
+            <h3>
+              <span className="Text text__delivery">Formy płatności</span>
+            </h3>
+            <p>
+              <span style={{ fontWeight: "400" }}>
+                Istnieje możliwość płatności w dwóch formach:
+              </span>
+            </p>
+            <ol>
+              <li style={{ fontWeight: "400" }}>
+                <span style={{ fontWeight: "400" }}>Przelew na konto</span>
+              </li>
+              <li style={{ fontWeight: "400" }}>
+                <span style={{ fontWeight: "400" }}>
+                  Płatności przy pobraniu paczki
+                </span>
+              </li>
+            </ol>
+            <p>
+              Po powierdzeniu zamówienia, skontaktujemy się z Toba drogą mailową
+              <span style={{ fontWeight: "400" }}>
+                <br/>
+                W razie pytań prosimy o kontakt. Więcej informacji znajdziesz w
+                zakładce <a href="/kontakt">kontakt</a>
+              </span>
+            </p>
+            <br />
             <button onClick={this.sendToBackEnd} class="sendOrder">
               Potwierdź zamówienie
             </button>

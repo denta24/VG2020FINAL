@@ -111,11 +111,14 @@ a:hover {
   /* margin-right: 10vw; */
   font-size: 13px;
   letter-spacing: 1px;
+  margin-top: 1.2vh;
+  margin-bottom: 1.2vh ;
+
   /* padding: 1vh 2vw; */
 }
 
 .titleElements > a {
-  display: block;
+  display: block !important;
   box-sizing: border-box;
 }
 .elements {
@@ -127,6 +130,8 @@ a:hover {
   text-align: center;
   padding: 0.5vh 1.5vw 0;
   border-left: 1px solid transparent;
+  display: block !important;
+
 }
 .titleElements:hover {
   border-left: 1px solid rgb(255, 255, 255);
@@ -174,7 +179,6 @@ a:hover {
 
   .elementsList {
     flex-direction: column;
-    margin: 4vw;
   }
 
   .nav-options:hover {
@@ -190,7 +194,7 @@ a:hover {
     justify-content: flex-end;
     align-items: center;
     text-align: center;
-    margin-bottom: 15vh;
+    margin-bottom: 25vh;
   }
   .menuOpen {
     transform: translateX(0%);
@@ -268,7 +272,7 @@ a:hover {
     transform: translateX(-5vw);
   }
   .titleElements {
-    margin: 2vh 0;
+    margin: 1.5vh 0;
   }
 
   .a_navi {
@@ -293,7 +297,7 @@ a:hover {
 }
 @media (max-width: 375px) {
   .titleElements {
-    margin: 2vh 0;
+    margin: 1.5vh 0;
   }
 
   .a_navi {

@@ -28,7 +28,14 @@ i {
   font-size: 30px;
   margin-right: 15px;
 }
+.container--terms {
+  padding: 6vh 10vw !important;
+  width: 65vw !important;
+}
 
+.title li {
+  margin-top: 12px;
+}
 .title:nth-child(1) {
   padding-bottom: 1px;
   border-bottom: 1px solid rgb(77, 77, 77);
@@ -81,6 +88,11 @@ i {
 }
 
 @media (max-width: 1024px) {
+  .container--terms {
+    padding: 3vh 5vw !important;
+    width: 80vw !important;
+  }
+
   .title {
     margin: 3vh 30px 1vh;
     font-size: 12px;
@@ -112,7 +124,7 @@ i {
     align-self: flex-start;
   }
   footer .divider {
-    margin: 3vh 1vw 0 ;
+    margin: 3vh 1vw 0;
   }
   .imgContainer {
     background-position-y: top;
@@ -131,4 +143,23 @@ i {
     justify-content: center;
     align-items: center;
   }
+
+  .container--terms {
+    padding: 1vh 5vw !important;
+    width: 85vw !important;
+  }
+}
+
+.title li:nth-child(3) {
+  margin-top: 2em;
+}
+.title li::after {
+  content: "";
+  display: block;
+  width: 20px;
+  background-color: rgb(107, 107, 107);
+  height: 1px;
+  margin-bottom: 2px;
+  margin-top: 2px;
+  margin-left: 2px;
 }

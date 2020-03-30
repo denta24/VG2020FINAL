@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import Navi from "./Components/Navi.js";
 import Footer from "./Components/Footer.js";
+import { Contact, Delivery, Terms } from "./Components/Footer.js";
 import Header from "./Components/Header.js";
 import Productpage from "./Components/Productpage.js";
 import Item from "./Components/Item.js";
@@ -83,7 +84,13 @@ class App extends Component {
     }
   };
   componentDidMount() {
-    // this.handleScroll();
+    window.addEventListener("load", function() {
+      console.log("LOADED");
+      setTimeout(function() {
+        // This hides the address bar:
+        window.scrollTo(0, 1);
+      }, 0);
+    });
     if (Cookies.get("shoppingCartVellutoGiorno")) {
       const cookiesLog = JSON.parse(Cookies.get("shoppingCartVellutoGiorno"));
       this.setState({
@@ -166,7 +173,7 @@ class App extends Component {
                 <Header />
                 <div className="container">
                   <CategoriesMain />
-                <MoreItems />
+                  <MoreItems />
                 </div>
               </Route>
               <Route path="/admin" component={Admin} />
@@ -176,6 +183,10 @@ class App extends Component {
               <Route exact path="/o-nas" component={About} />
               <Route exact path="/kobiety" component={Women} />
 
+              <Route exact path="/kontakt" component={Contact} />
+              <Route exact path="/regulamin" component={Terms} />
+              <Route exact path="/dostawa" component={Delivery} />
+              
               <Route
                 path="/koszyk"
                 render={props => (

@@ -20,8 +20,11 @@ const cookieParser = require("cookie-parser");
 
 app.use(cors());
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '150mb'}));
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+limit: '150mb',
+extended: true
+})); 
 app.use(cookieParser());
 app.use("/api/users", require("./routes/users"));
 
@@ -124,27 +127,32 @@ MongoClient.connect(
         });
     });
 
-    app.get("/api/allOrders", (req, res) => {
-      const newOrder = req.body;
-
-      const collection = db.db("VellutoGiorno").collection("orders");
-      console.log("chce");
-      collection
-        .find({})
-        .toArray()
-        .then(response => {
-          const orders = { orders: response };
-          res.json({
-            orders
+app.get("/api/allOrders", (req, res) => {
+      let isAdmin = false;
+      let cookiesAdmin = "eyJrIjoiT0tTcG1pUlY2RnVKZTFVaDFsNFZXdE9ZWmNrMkZYbk";
+      if (cookiesAdmin == req.cookies.VGadminKEY) {
+        isAdmin = true;
+      }
+      console.log(isAdmin);
+      if (isAdmin) {
+        const collection = db.db("VellutoGiorno").collection("orders");
+        collection
+          .find({})
+          .toArray()
+          .then(response => {
+            const orders = {
+              orders: response
+            };
+            res.json({
+              orders
+            });
           });
-          console.log(response);
-        });
+      } else res.json({ RSP: "nie masz uprawnien" });
     });
 
     app.get("/api/allProducts", (req, res) => {
       const collection = db.db("VellutoGiorno").collection("test");
       console.log("chce");
-
       collection
         .find({})
         .toArray()
@@ -168,9 +176,13 @@ MongoClient.connect(
     });
 
     app.post("/api/newProduct", upload.array("images"), (req, resp) => {
+
+	console.log('0');
       const formData = req.body;
       const images = req.files;
-      const newProduct = {
+    
+	console.log('1');
+  const newProduct = {
         id: formData.id,
         name: formData.name,
         mainCategory: formData.mainCategory,
