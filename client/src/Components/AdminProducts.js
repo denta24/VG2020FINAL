@@ -21,10 +21,12 @@ export default class AdminProducts extends Component {
   }
 
   render() {
+    let sumaAll = 0;
     if (this.state.isLoaded) {
       const { items } = this.state.items;
       console.log(items);
       const listOfProducts = items.map(item => {
+        sumaAll += item.prize * item.size.length;
         return (
           <tr>
             <th>{item.id}</th>
@@ -45,6 +47,7 @@ export default class AdminProducts extends Component {
       return (
         <>
           <table>
+            {console.log(sumaAll)}
             <tr>
               <th>ID</th>
               <th>Zdjęcie głowne</th>

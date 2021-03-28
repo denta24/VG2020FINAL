@@ -11,18 +11,18 @@ export default class AdminAdd extends Component {
       prize: 1219.99,
       size: [""],
       color: "Biały",
-      description: "Opis produktu",
-      imgSrc: ["/photos/sukniaslubna.JPG", "/photos/sukniaslubna.JPG"]
+      description: "<b>Opis produktu</b>",
+      imgSrc: ["/photos/sukniaslubna.JPG", "/photos/sukniaslubna.JPG"],
     },
     test: {
-      color: "black"
+      color: "black",
     },
     files: [],
     preview: ["/photos/sukniaslubna.JPG", "/photos/sukniaslubna.JPG"],
     measure: [""],
     measureFiles: [],
     isProductAdded: false,
-    messageBackend: ""
+    messageBackend: "",
   };
 
   isLoaded = true;
@@ -37,8 +37,8 @@ export default class AdminAdd extends Component {
         ["Koszule", "koszule"],
         ["Obuwie", "obuwie"],
         ["Biżuteria", "bizuteria"],
-        ["Torebki", "torebki"]
-      ]
+        ["Torebki", "torebki"],
+      ],
     },
     {
       name: ["Mężczyźni", "mezczyzni"],
@@ -49,25 +49,25 @@ export default class AdminAdd extends Component {
         ["Spodnie", "spodnie"],
         ["Płaszcze", "plaszcze"],
         ["Obuwie", "obuwie"],
-        ["Akcesoria", "akcesoria"]
-      ]
+        ["Akcesoria", "akcesoria"],
+      ],
     },
     {
       name: ["Suknie ślubne", "suknie-slubne"],
       titles: [
         ["Suknie", "suknie"],
         ["Obuwie", "obuwie"],
-        ["Dodatki", "dodatki"]
-      ]
-    }
+        ["Dodatki", "dodatki"],
+      ],
+    },
   ];
 
-  sendToBackEnd = e => {
+  sendToBackEnd = (e) => {
     const data = this.state.item;
     const { files, measureFiles } = this.state;
     function getFormData(object) {
       const formData = new FormData();
-      Object.keys(object).forEach(key => formData.append(key, object[key]));
+      Object.keys(object).forEach((key) => formData.append(key, object[key]));
       return formData;
     }
     const productBody = getFormData(data);
@@ -90,107 +90,107 @@ export default class AdminAdd extends Component {
     if (
       data.mainCategory !== "" &&
       data.category !== "" &&
-      data.subcategory != ""
+      data.subcategory !== ""
     ) {
       fetch("/api/newProduct", {
         method: "POST",
         headers: {
-          Accept: "application/json"
+          Accept: "application/json",
           // "Content-Type": "multipart/form-data"
         },
-        body: productBody
+        body: productBody,
       })
-        .then(res => res.json())
-        .then(res => {
+        .then((res) => res.json())
+        .then((res) => {
           console.log(res);
           this.setState({ isProductAdded: true, messageBackend: res.message });
         });
     } else alert("Coś zle, popraw dane");
   };
 
-  handleNameInput = e => {
+  handleNameInput = (e) => {
     const name = e.target.value;
     this.setState({
       item: {
         ...this.state.item,
-        name
-      }
+        name,
+      },
     });
   };
-  handleSubcategoryInput = e => {
+  handleSubcategoryInput = (e) => {
     const subcategory = e.target.value;
     this.setState({
       item: {
         ...this.state.item,
-        subcategory
-      }
+        subcategory,
+      },
     });
   };
 
-  handlePrizeInput = e => {
+  handlePrizeInput = (e) => {
     const prize = e.target.value * 1;
     this.setState({
       item: {
         ...this.state.item,
-        prize
-      }
+        prize,
+      },
     });
   };
-  handleColorInput = e => {
+  handleColorInput = (e) => {
     const color = e.target.value;
     this.setState({
       item: {
         ...this.state.item,
-        color
-      }
+        color,
+      },
     });
   };
 
-  handleGenderInput = e => {
+  handleGenderInput = (e) => {
     const mainCategory = e.target.value;
     this.setState({
       item: {
         ...this.state.item,
-        mainCategory
-      }
+        mainCategory,
+      },
     });
   };
 
-  handleTypeInput = e => {
+  handleTypeInput = (e) => {
     const category = e.target.value;
     this.setState({
       item: {
         ...this.state.item,
-        category
-      }
+        category,
+      },
     });
   };
 
-  handleSizeInput = e => {
+  handleSizeInput = (e) => {
     const size = e.target.value.split(",");
     this.setState({
       item: {
         ...this.state.item,
-        size
-      }
+        size,
+      },
     });
   };
 
-  handleDescriptionInput = e => {
+  handleDescriptionInput = (e) => {
     const description = e.target.value;
     this.setState({
       item: {
         ...this.state.item,
-        description
-      }
+        description,
+      },
     });
   };
 
-  handleMiniImgClick = e => {
+  handleMiniImgClick = (e) => {
     document.querySelector(".product__image").src = e.target.src;
   };
 
-  handleLoadImg = e => {
+  handleLoadImg = (e) => {
     if (e.target.files.length) {
       const { files } = this.state;
       const [file] = e.target.files;
@@ -198,19 +198,19 @@ export default class AdminAdd extends Component {
 
       this.setState({
         image: files,
-        files
+        files,
       });
       // };
       for (let i = 0; i < files.length; i++) {
         const reader = new FileReader();
         this.setState({
-          preview: []
+          preview: [],
         });
         reader.addEventListener(
           "load",
           () => {
-            this.setState(prevState => ({
-              preview: [...prevState.preview, reader.result]
+            this.setState((prevState) => ({
+              preview: [...prevState.preview, reader.result],
             }));
           },
           false
@@ -222,26 +222,26 @@ export default class AdminAdd extends Component {
       }
     }
   };
-  handleLoadImgMeasure = e => {
+  handleLoadImgMeasure = (e) => {
     if (e.target.files.length) {
       const { measureFiles } = this.state;
       const [file] = e.target.files;
       measureFiles.push(file);
 
       this.setState({
-        measureFiles
+        measureFiles,
       });
       // };
       for (let i = 0; i < measureFiles.length; i++) {
         const reader = new FileReader();
         this.setState({
-          measure: []
+          measure: [],
         });
         reader.addEventListener(
           "load",
           () => {
-            this.setState(prevState => ({
-              measure: [...prevState.measure, reader.result]
+            this.setState((prevState) => ({
+              measure: [...prevState.measure, reader.result],
             }));
           },
           false
@@ -258,14 +258,14 @@ export default class AdminAdd extends Component {
     const { item, preview, measure, measureFiles } = this.state;
     console.log({ measure, measureFiles });
     const [categories] = this.categoriesNav.filter(
-      item => item.name[0] === this.state.item.mainCategory
+      (item) => item.name[0] === this.state.item.mainCategory
     );
 
-    const categoriesList = categories.titles.map(item => {
+    const categoriesList = categories.titles.map((item) => {
       return <option value={item[0]}>{item[0]}</option>;
     });
 
-    const mini_items = preview.map(item => (
+    const mini_items = preview.map((item) => (
       <>
         <div className="product__mini-image">
           <img
@@ -278,14 +278,14 @@ export default class AdminAdd extends Component {
       </>
     ));
 
-    const allSizes = item.size.map(item => (
+    const allSizes = item.size.map((item) => (
       <button className="product__button">{item}</button>
     ));
 
     const popup = [
       <div style={{ display: "block" }} className="popup">
         <div
-          onClick={e => {
+          onClick={(e) => {
             this.setState({ isProductAdded: false });
           }}
           className="popup__background"
@@ -304,7 +304,7 @@ export default class AdminAdd extends Component {
             Zakończ
           </button>
         </div>
-      </div>
+      </div>,
     ];
 
     if (this.isLoaded) {
@@ -381,9 +381,9 @@ export default class AdminAdd extends Component {
                 this.setState({
                   preview: [
                     "/photos/sukniaslubna.JPG",
-                    "/photos/sukniaslubna.JPG"
+                    "/photos/sukniaslubna.JPG",
                   ],
-                  files: []
+                  files: [],
                 });
               }}
             >
@@ -405,7 +405,7 @@ export default class AdminAdd extends Component {
               onClick={() => {
                 this.setState({
                   measure: [],
-                  measureFiles: []
+                  measureFiles: [],
                 });
               }}
             >
@@ -414,6 +414,7 @@ export default class AdminAdd extends Component {
             {/* ///////////////////////// */}
 
             <label for="description">Opis:</label>
+
             <textarea
               onChange={this.handleDescriptionInput}
               id="description"
@@ -458,7 +459,7 @@ export default class AdminAdd extends Component {
 
                 <div className="product__description product__expanding--open">
                   <div
-                    onClick={e => {
+                    onClick={(e) => {
                       e.target.nextSibling.classList.toggle(
                         "product__expanding--open"
                       );
@@ -467,14 +468,15 @@ export default class AdminAdd extends Component {
                   >
                     Informacje o produkcie
                   </div>
-                  <div className="product__expanding product__expanding--open">
-                    {item.description}
-                  </div>
+                  <div
+                    dangerouslySetInnerHTML={{ __html: `${item.description}` }}
+                    className="product__expanding product__expanding--open"
+                  ></div>
                 </div>
 
                 <div className="product__description">
                   <div
-                    onClick={e => {
+                    onClick={(e) => {
                       e.target.nextSibling.classList.toggle(
                         "product__expanding--open"
                       );
@@ -498,7 +500,7 @@ export default class AdminAdd extends Component {
 
                 <div className="product__description product__expanding--open">
                   <div
-                    onClick={e => {
+                    onClick={(e) => {
                       e.target.nextSibling.classList.toggle(
                         "product__expanding--open"
                       );
@@ -519,7 +521,7 @@ export default class AdminAdd extends Component {
                   <br /> Kategoria w submenu: <span> {item.category}</span>
                   <br /> Kategoria w filtrach: <span>{item.subcategory}</span>
                 </h2>
-                <h2 className="product__color"></h2>
+                <h2 className="product__color">{item.color}</h2>
               </div>
             </div>{" "}
           </div>

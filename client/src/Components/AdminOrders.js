@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import "./css/Admin.css";
 export default class AdminOrders extends Component {
   state = {
-    isLoaded: false
+    isLoaded: false,
   };
 
-  handleListClick = item => {
+  handleListClick = (item) => {
     console.log("działa");
     this.setState({ item });
     const info = document.querySelector(".adminOrder");
@@ -28,15 +28,15 @@ export default class AdminOrders extends Component {
 
   loadItem = () => {
     fetch("/api/allOrders")
-      .then(res => res.json())
-      .then(res => {
+      .then((res) => res.json())
+      .then((res) => {
         const { orders } = res.orders;
         const item = orders[orders.length - 1];
         console.log(res);
         this.setState({
           orders,
           isLoaded: true,
-          item
+          item,
         });
       });
   };
@@ -53,7 +53,7 @@ export default class AdminOrders extends Component {
       const listOfProducts = items.map((item, index) => {
         let sum = 0;
 
-        item.cart.forEach(i => {
+        item.cart.forEach((i) => {
           sum += i.prize;
         });
 
@@ -79,7 +79,7 @@ export default class AdminOrders extends Component {
         );
       });
       let suma = 0;
-      const customerCart = cart.map(item => {
+      const customerCart = cart.map((item) => {
         suma += item.prize;
         return (
           <div className="adminOrder__item">
@@ -102,6 +102,14 @@ export default class AdminOrders extends Component {
           </div>
         );
       });
+
+      ////////Cena przesyłki
+      let deliveryPrice = 0;
+
+      if (customerInfo.deliveryMethod === "Przelew na konto")
+        deliveryPrice = 13.99;
+      else if (customerInfo.deliveryMethod === "Płatność przy odbiorze")
+        deliveryPrice = 21.99;
 
       const adminOrder = [
         <div className="adminOrder">
@@ -167,18 +175,31 @@ export default class AdminOrders extends Component {
 
               <div className="adminOrder__singleTableColumn">
                 <div className="adminOrder__singleTableRow">
+                  Cena produktów{" "}
+                </div>{" "}
+                <div className="adminOrder__singleTableRow">{suma} PLN</div>
+              </div>
+              <div className="adminOrder__singleTableColumn">
+                <div className="adminOrder__singleTableRow">Przesyłka </div>{" "}
+                <div className="adminOrder__singleTableRow">
+                  {deliveryPrice} PLN
+                </div>
+              </div>
+              <div className="adminOrder__singleTableColumn">
+                <div className="adminOrder__singleTableRow">
                   Sposób doręczenia
                 </div>{" "}
                 <div className="adminOrder__singleTableRow">
                   {customerInfo.deliveryMethod}
                 </div>
               </div>
+
               <div className="adminOrder__singleTableColumn">
                 <div className="adminOrder__singleTableRow">
-                  Cena produktów{" "}
+                  Cena całkowita{" "}
                 </div>{" "}
                 <div className="adminOrder__singleTableRow">
-                  {suma.toFixed(2)} PLN
+                  {[suma * 1 + deliveryPrice][0].toFixed(2)} PLN
                 </div>
               </div>
               <div className="adminOrder__singleTableColumn">
@@ -190,7 +211,7 @@ export default class AdminOrders extends Component {
             </div>
           </div>
           <div className="adminOrder__cart-info">{customerCart}</div>
-        </div>
+        </div>,
       ];
 
       return (

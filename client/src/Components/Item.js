@@ -8,15 +8,13 @@ export default class Item extends Component {
   state = {
     item: { id: "", name: "", prize: 0, imgSrc: [], measureSrc: [] },
     items: [{ id: "", name: "", prize: 0, imgSrc: [""] }],
-    selectedSize: ["null"]
+    selectedSize: ["null"],
   };
 
-  measures = [
-    "data:image/png;base64,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"
-  ];
+  measures = ["eee"];
 
   isLoaded = false;
-  handleScrollClick = side => {
+  handleScrollClick = (side) => {
     const slider = document.querySelector(".product__mini .product__mini");
     const x = slider.scrollLeft;
 
@@ -27,14 +25,14 @@ export default class Item extends Component {
     slider.scroll({
       top: 0,
       left: scrollInX,
-      behavior: "smooth"
+      behavior: "smooth",
     });
   };
   componentWillMount() {
     window.scrollTo(0, 0);
   }
 
-  handleMiniImgClick = e => {
+  handleMiniImgClick = (e) => {
     document.querySelector(".product__image").src = e.target.src;
   };
 
@@ -42,8 +40,8 @@ export default class Item extends Component {
     console.log("eeeeeeeeee");
     const href = `/api${window.location.pathname}`;
     fetch(href)
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         this.isLoaded = true;
         if (
           typeof data.measureSrc === "undefined" ||
@@ -76,7 +74,7 @@ export default class Item extends Component {
       if (selectedSize.length) {
         const choosedItem = {
           ...this.state.item,
-          size: [this.state.selectedSize]
+          size: [this.state.selectedSize],
         };
         this.props.addItemToCart(choosedItem);
 
@@ -86,9 +84,11 @@ export default class Item extends Component {
     } else {
       const choosedItem = {
         ...this.state.item,
-        size: ["brak"]
+        size: ["brak"],
       };
       this.props.addItemToCart(choosedItem);
+      const popup = document.querySelector(".popup");
+      popup.style.display = "block";
     }
   };
 
@@ -102,7 +102,7 @@ export default class Item extends Component {
     let diff;
     let transformX = 0;
     let target = null;
-    const down = e => {
+    const down = (e) => {
       isClicked = true;
       startPosition = e.clientX;
       lastCategory = document.querySelector(".product__mini-image:last-child");
@@ -116,7 +116,7 @@ export default class Item extends Component {
       e.preventDefault();
     };
 
-    const move = e => {
+    const move = (e) => {
       if (isClicked && lastCategory.getBoundingClientRect) {
         const x = lastCategory.getBoundingClientRect().x.toFixed(2);
         diff = e.clientX - startPosition;
@@ -134,7 +134,7 @@ export default class Item extends Component {
       }
     };
 
-    const up = e => {
+    const up = (e) => {
       isClicked = false;
       if (target) target.style.pointerEvents = "auto";
       e.preventDefault();
@@ -153,7 +153,7 @@ export default class Item extends Component {
       // console.log(this.props, "propsyyy");
 
       // console.log(item);
-      const mini_items = item.imgSrc.map(item => (
+      const mini_items = item.imgSrc.map((item) => (
         <>
           <div className="product__mini-image">
             <LightgalleryItem src={item}>
@@ -168,11 +168,11 @@ export default class Item extends Component {
         </>
       ));
 
-      const allSizes = item.size.map(size => (
+      const allSizes = item.size.map((size) => (
         <button
           id={`${size}`}
           className="product__button"
-          onClick={e => this.setState({ selectedSize: [size] })}
+          onClick={(e) => this.setState({ selectedSize: [size] })}
         >
           {size}
         </button>
@@ -181,7 +181,7 @@ export default class Item extends Component {
       const popup = [
         <div className="popup">
           <div
-            onClick={e => {
+            onClick={(e) => {
               document.querySelector(".popup").style.display = "none";
             }}
             className="popup__background"
@@ -200,7 +200,7 @@ export default class Item extends Component {
                     style={{
                       color: "black",
                       marginBottom: "2vh",
-                      border: "none"
+                      border: "none",
                     }}
                     className="singleCartItem__infoSingle"
                   >
@@ -236,7 +236,7 @@ export default class Item extends Component {
               </a>
             </div>
           </div>
-        </div>
+        </div>,
       ];
 
       return (
@@ -314,7 +314,7 @@ export default class Item extends Component {
 
                   <div className="product__description">
                     <div
-                      onClick={e => {
+                      onClick={(e) => {
                         e.target.nextSibling.classList.toggle(
                           "product__expanding--open"
                         );
@@ -323,15 +323,17 @@ export default class Item extends Component {
                     >
                       Informacje o produkcie
                     </div>
-                    <div className="product__expanding ">
-                      {item.description}
-                      <br></br>
-                    </div>
+                    <div
+                      className="product__expanding "
+                      dangerouslySetInnerHTML={{
+                        __html: `${item.description}`,
+                      }}
+                    ></div>
                   </div>
 
                   <div className="product__description">
                     <div
-                      onClick={e => {
+                      onClick={(e) => {
                         e.target.nextSibling.classList.toggle(
                           "product__expanding--open"
                         );

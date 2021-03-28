@@ -4,19 +4,18 @@ import { Link } from "react-router-dom";
 export default class SingleItem extends Component {
   state = {
     item: [],
-    isLoaded: false
+    isLoaded: false,
   };
 
   loadItem = () => {
     console.log(this.props.id);
     fetch(`/api/product/${this.props.id}`)
-      .then(res => res.json())
-      .then(res => {
+      .then((res) => res.json())
+      .then((res) => {
         const item = res;
-        console.log(this.props.id);
         this.setState({ item, isLoaded: true });
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
 
   componentDidMount() {
@@ -25,14 +24,15 @@ export default class SingleItem extends Component {
 
   render() {
     const { item } = this.state;
-    // console.log(item.id);
+    // if (item.imgSrc[0]) console.log(item.imgSrc[0]);
+    console.log(item);
 
     const path = `/product/${item.id}`;
     const linkProps = {
       pathname: path,
       state: {
-        item
-      }
+        item,
+      },
     };
     if (this.state.isLoaded) {
       return (
@@ -43,10 +43,10 @@ export default class SingleItem extends Component {
                 <img
                   className="item__imgPicture"
                   src={item.imgSrc[0]}
-                  onMouseOver={e => {
+                  onMouseOver={(e) => {
                     e.target.src = `${item.imgSrc[1] || item.imgSrc[0]}`;
                   }}
-                  onMouseLeave={e => {
+                  onMouseLeave={(e) => {
                     e.target.src = item.imgSrc[0];
                   }}
                   alt=""

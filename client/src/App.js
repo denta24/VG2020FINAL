@@ -24,48 +24,49 @@ import Cookies from "js-cookie";
 class App extends Component {
   state = { cart: [{ id: "", name: "", prize: 0, imgSrc: [] }], cart: [] };
 
-  addItemToCart = item => {
+  addItemToCart = (item) => {
     console.log(item);
+    delete item.measureSrc;
     Cookies.set("shoppingCartVellutoGiorno", [...this.state.cart, item], {
-      expires: 1
+      expires: 1,
     });
     this.setState({
-      cart: [...this.state.cart, item]
+      cart: [...this.state.cart, item],
     });
     console.log({ item });
   };
-  clearCart = item => {
+  clearCart = (item) => {
     console.log(item);
     Cookies.set("shoppingCartVellutoGiorno", [], {
-      expires: 1
+      expires: 1,
     });
     this.setState({
-      cart: []
+      cart: [],
     });
   };
 
-  cookiesDeleteItem = index => {
+  cookiesDeleteItem = (index) => {
     const { cart } = this.state;
     cart.splice(index, 1);
     console.log(index, cart);
     Cookies.set("shoppingCartVellutoGiorno", cart, {
-      expires: 1
+      expires: 1,
     });
     this.setState({
-      cart
+      cart,
     });
     window.location.reload();
   };
 
-  handleDelete = index => {
+  handleDelete = (index) => {
     const { cart } = this.state;
     cart.splice(index, 1);
     console.log(index, cart);
     Cookies.set("shoppingCartVellutoGiorno", cart, {
-      expires: 1
+      expires: 1,
     });
     this.setState({
-      cart
+      cart,
     });
   };
 
@@ -74,7 +75,7 @@ class App extends Component {
       const nav = document.querySelector("nav");
       nav.style.position = " fixed";
       nav.style.background = " rgba(0, 0, 0, 0.0)";
-      window.addEventListener("scroll", e => {
+      window.addEventListener("scroll", (e) => {
         const nav = document.querySelector("nav");
         const menu = document.querySelector("header");
         if (window.pageYOffset + 500 > document.documentElement.clientHeight) {
@@ -84,9 +85,9 @@ class App extends Component {
     }
   };
   componentDidMount() {
-    window.addEventListener("load", function() {
+    window.addEventListener("load", function () {
       console.log("LOADED");
-      setTimeout(function() {
+      setTimeout(function () {
         // This hides the address bar:
         window.scrollTo(0, 1);
       }, 0);
@@ -94,7 +95,7 @@ class App extends Component {
     if (Cookies.get("shoppingCartVellutoGiorno")) {
       const cookiesLog = JSON.parse(Cookies.get("shoppingCartVellutoGiorno"));
       this.setState({
-        cart: cookiesLog
+        cart: cookiesLog,
       });
     }
   }
@@ -139,7 +140,7 @@ class App extends Component {
             <div className="cartCounter">
               <i
                 class="fas fa-shopping-bag fa-color"
-                onClick={e => {
+                onClick={(e) => {
                   const shoppingCart = document.querySelector(".cart");
                   if (shoppingCart) shoppingCart.classList.add("cartOpen");
                 }}
@@ -152,7 +153,7 @@ class App extends Component {
             <div className="cart">
               <span
                 className="close"
-                onClick={e => {
+                onClick={(e) => {
                   const shoppingCart = document.querySelector(".cart");
                   if (shoppingCart) shoppingCart.classList.remove("cartOpen");
                 }}
@@ -186,10 +187,10 @@ class App extends Component {
               <Route exact path="/kontakt" component={Contact} />
               <Route exact path="/regulamin" component={Terms} />
               <Route exact path="/dostawa" component={Delivery} />
-              
+
               <Route
                 path="/koszyk"
-                render={props => (
+                render={(props) => (
                   <Cart
                     {...props}
                     cookiesDeleteItem={this.cookiesDeleteItem}
@@ -200,7 +201,7 @@ class App extends Component {
               />
               <Route
                 path="/product/:id"
-                render={props => (
+                render={(props) => (
                   <Item
                     {...props}
                     addItemToCart={this.addItemToCart}
@@ -209,6 +210,13 @@ class App extends Component {
                 )}
               />
               <Route path="/:mainCat/:category" component={Productpage} />
+              <Route path="/:mainCat/:category" component={Productpage} />
+              <Route
+                path="*"
+                component={() => {
+                  window.location.href = "/";
+                }}
+              />
             </Switch>
             <Footer />
           </div>

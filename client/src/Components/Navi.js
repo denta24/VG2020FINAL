@@ -83,7 +83,6 @@ export default function Navi() {
       gsap.from(titles, { x: 300, opacity: 0, stagger: 0.2 });
     }
   };
-  const menuIn = e => {};
   return (
     <>
       <nav className="navigation">

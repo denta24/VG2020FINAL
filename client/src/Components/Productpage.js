@@ -2,6 +2,7 @@ import "./css/Productpage.css";
 import "./css/slider.css";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import MoreItems from "./MoreItems.js";
 import gsap from "gsap";
 let isMouseOver = false;
 
@@ -14,7 +15,7 @@ export default class Productpage extends Component {
       maxprize: 100,
       sizes: [],
       subcategories: [],
-      colors: []
+      colors: [],
     },
     allSubCat: [],
     allSizes: [],
@@ -24,13 +25,13 @@ export default class Productpage extends Component {
       pathname: "",
       state: {
         pathName: { mainCat: "", category: "" },
-        pathLink: { mainCat: "", category: "" }
-      }
+        pathLink: { mainCat: "", category: "" },
+      },
     },
     sort: "time",
     page: 1,
 
-    isLoaded: false
+    isLoaded: false,
   };
   handleURLSearch = () => {
     const URL = window.location.pathname;
@@ -78,10 +79,10 @@ export default class Productpage extends Component {
     // console.log(queryLink);
 
     this.callApi()
-      .then(res => {
+      .then((res) => {
         this.setState({ items: res.kobiety.items, params: res.params });
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
 
   handleULRstate = () => {
@@ -117,38 +118,38 @@ export default class Productpage extends Component {
     }
     console.log(filters, "filterrrrrrrr");
     this.setState({
-      filters
+      filters,
     });
   };
 
-  handleMinSlider = e => {
+  handleMinSlider = (e) => {
     e.preventDefault();
     const minprize = e.target.value * 1;
 
     if (minprize * 1 <= this.state.filters.maxprize) {
       this.setState({
         filters: { ...this.state.filters, minprize },
-        page: 1
+        page: 1,
       });
     }
   };
 
-  handleMaxSlider = e => {
+  handleMaxSlider = (e) => {
     e.preventDefault();
     const maxprize = e.target.value * 1;
 
     if (maxprize >= this.state.filters.minprize) {
       this.setState({
         filters: { ...this.state.filters, maxprize },
-        page: 1
+        page: 1,
       });
     }
   };
 
-  toggleChangeCheckBox = e => {
+  toggleChangeCheckBox = (e) => {
     const toggle = (arr, item) =>
       arr.includes(item)
-        ? arr.filter(i => i !== item) // remove item
+        ? arr.filter((i) => i !== item) // remove item
         : [...arr, item]; // add item
     const element = e.target.id;
     let { sizes } = this.state.filters;
@@ -157,15 +158,15 @@ export default class Productpage extends Component {
     this.setState(
       {
         filters: { ...this.state.filters, sizes: array },
-        page: 1
+        page: 1,
       },
       this.handleURLSearch
     );
   };
-  toggleChangeCheckBoxSub = e => {
+  toggleChangeCheckBoxSub = (e) => {
     const toggle = (arr, item) =>
       arr.includes(item)
-        ? arr.filter(i => i !== item) // remove item
+        ? arr.filter((i) => i !== item) // remove item
         : [...arr, item]; // add item
     const element = e.target.id;
     let { subcategories } = this.state.filters;
@@ -175,16 +176,16 @@ export default class Productpage extends Component {
       {
         filters: { ...this.state.filters, subcategories: array },
 
-        page: 1
+        page: 1,
       },
       this.handleURLSearch
     );
   };
 
-  toggleChangeCheckBoxColor = e => {
+  toggleChangeCheckBoxColor = (e) => {
     const toggle = (arr, item) =>
       arr.includes(item)
-        ? arr.filter(i => i !== item) // remove item
+        ? arr.filter((i) => i !== item) // remove item
         : [...arr, item]; // add item
     const element = e.target.id;
     let { colors } = this.state.filters;
@@ -193,7 +194,7 @@ export default class Productpage extends Component {
     this.setState(
       {
         filters: { ...this.state.filters, colors: array },
-        page: 1
+        page: 1,
       },
       this.handleURLSearch
     );
@@ -208,7 +209,7 @@ export default class Productpage extends Component {
   };
 
   menuFixed = () => {
-    const checkIfOver = menu => {
+    const checkIfOver = (menu) => {
       if (menu) {
         menu.addEventListener("mouseover", () => {
           isMouseOver = true;
@@ -219,7 +220,7 @@ export default class Productpage extends Component {
         return isMouseOver;
       }
     };
-    window.addEventListener("scroll", e => {
+    window.addEventListener("scroll", (e) => {
       if (document.querySelector("header")) {
         const nav = document.querySelector("nav");
         const menu = document.querySelector("header");
@@ -257,17 +258,17 @@ export default class Productpage extends Component {
       switch (mainCat) {
         case "Kobiety":
           return {
-            backgroundImage: `url('/photos/zaj.jpg')`
+            backgroundImage: `url('/photos/zaj.jpg')`,
           };
           break;
         case "Mężczyźni":
           return {
-            backgroundImage: `url('/photos/men.jpg')`
+            backgroundImage: `url('/photos/men.jpg')`,
           };
           break;
         case "Suknie ślubne":
           return {
-            backgroundImage: `url('/photos/sssss.jpg')`
+            backgroundImage: `url('/photos/sssss.jpg')`,
           };
           break;
         default:
@@ -277,17 +278,17 @@ export default class Productpage extends Component {
       switch (mainCat) {
         case "Kobiety":
           return {
-            backgroundImage: `url('/photos/women425.jpg')`
+            backgroundImage: `url('/photos/women425.jpg')`,
           };
           break;
         case "Mężczyźni":
           return {
-            backgroundImage: `url('/photos/men425.jpg')`
+            backgroundImage: `url('/photos/men425.jpg')`,
           };
           break;
         case "Suknie ślubne":
           return {
-            backgroundImage: `url('/photos/bride425.jpg')`
+            backgroundImage: `url('/photos/bride425.jpg')`,
           };
           break;
         default:
@@ -297,12 +298,15 @@ export default class Productpage extends Component {
   };
 
   handleAnimations = () => {
+    if (
+      !document.querySelector(".productSelectedName") ||
+      !document.querySelector(".catalog__product-display")
+    )
+      return;
     const titles = document.querySelector(".productSelectedName").childNodes;
-    console.log(titles);
     const wrapper = document.querySelector(".productSiteWrapper").childNodes;
     const items = document.querySelector(".catalog__product-display")
       .childNodes;
-
     const tl = gsap.timeline({ defaults: { ease: "power3.inOut" } });
     tl.from(titles, 2, { x: -300, opacity: 0, stagger: 0.2 }).from(
       items,
@@ -310,7 +314,7 @@ export default class Productpage extends Component {
         y: 200,
         opacity: 0,
         stagger: 0.2,
-        ease: "power0"
+        ease: "power0",
       },
       "-=1"
     );
@@ -318,7 +322,7 @@ export default class Productpage extends Component {
   componentDidMount() {
     this.handleULRstate();
     this.callApi()
-      .then(res => {
+      .then((res) => {
         //////////READ ITEMS
         const items = res.kobiety.items;
         //////////SORT
@@ -326,32 +330,32 @@ export default class Productpage extends Component {
         //////////////READ ROUTES
         const linkProps = res.linkProps;
         ////////////READ SIZE, SUBCATEGORIES
-        const allSub = res.kobiety.items.map(item => {
+        const allSub = res.kobiety.items.map((item) => {
           return item.subcategory;
         });
-        const allS = res.kobiety.items.map(item => {
+        const allS = res.kobiety.items.map((item) => {
           return item.size;
         });
-        const allC = res.kobiety.items.map(item => {
+        const allC = res.kobiety.items.map((item) => {
           return item.color;
         });
         let allSubCat = [];
         let allSizes = [];
         let allColors = [];
 
-        allSub.forEach(item => {
+        allSub.forEach((item) => {
           if (!allSubCat.includes(item)) {
             allSubCat.push(item);
           }
         });
-        allS.forEach(arraySizes => {
-          arraySizes.forEach(size => {
+        allS.forEach((arraySizes) => {
+          arraySizes.forEach((size) => {
             if (!allSizes.includes(size)) {
               allSizes.push(size);
             }
           });
         });
-        allC.forEach(item => {
+        allC.forEach((item) => {
           if (!allColors.includes(item)) {
             allColors.push(item);
           }
@@ -363,7 +367,7 @@ export default class Productpage extends Component {
         let maxprize = items[0].prize;
         let minprize = items[0].prize;
 
-        items.forEach(item => {
+        items.forEach((item) => {
           if (item.prize < minprize) minprize = item.prize;
           if (item.prize > maxprize) maxprize = item.prize;
         });
@@ -372,8 +376,8 @@ export default class Productpage extends Component {
           this.setState({
             filters: {
               ...this.state.filters,
-              maxprize
-            }
+              maxprize,
+            },
           });
         }
 
@@ -381,8 +385,8 @@ export default class Productpage extends Component {
           this.setState({
             filters: {
               ...this.state.filters,
-              minprize
-            }
+              minprize,
+            },
           });
         }
 
@@ -391,8 +395,8 @@ export default class Productpage extends Component {
             filters: {
               ...this.state.filters,
               minprize,
-              maxprize
-            }
+              maxprize,
+            },
           });
         }
 
@@ -405,18 +409,23 @@ export default class Productpage extends Component {
             allColors,
             allPrizes: { minprize, maxprize },
             filters: {
-              ...this.state.filters
+              ...this.state.filters,
               // , maxprize, minprize
             },
             linkProps,
-            isLoaded: true
+            isLoaded: true,
           },
           () => {
             this.handleAnimations();
           }
         );
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => {
+        this.setState({
+          isLoaded: true,
+        });
+      });
   }
 
   handleFilters(items, filters) {
@@ -424,11 +433,11 @@ export default class Productpage extends Component {
     let afterItems = items;
 
     if (filters.sizes.length) {
-      afterItems = arrayOfItems.filter(item => {
+      afterItems = arrayOfItems.filter((item) => {
         let hasFilterProperty = false;
 
-        item.size.forEach(itemSize => {
-          filters.sizes.forEach(filter => {
+        item.size.forEach((itemSize) => {
+          filters.sizes.forEach((filter) => {
             if (itemSize === filter) {
               hasFilterProperty = true;
             }
@@ -440,10 +449,10 @@ export default class Productpage extends Component {
     }
 
     if (filters.subcategories.length) {
-      afterItems = afterItems.filter(item => {
+      afterItems = afterItems.filter((item) => {
         let hasFilterProperty = false;
 
-        filters.subcategories.forEach(filter => {
+        filters.subcategories.forEach((filter) => {
           if (item.subcategory === filter) {
             hasFilterProperty = true;
           }
@@ -454,10 +463,10 @@ export default class Productpage extends Component {
     }
 
     if (filters.colors.length) {
-      afterItems = afterItems.filter(item => {
+      afterItems = afterItems.filter((item) => {
         let hasFilterProperty = false;
 
-        filters.colors.forEach(filter => {
+        filters.colors.forEach((filter) => {
           if (item.color === filter) {
             hasFilterProperty = true;
           }
@@ -469,13 +478,13 @@ export default class Productpage extends Component {
 
     if (filters.maxprize * 1 !== this.state.allPrizes.maxprize) {
       afterItems = afterItems.filter(
-        item => item.prize <= filters.maxprize * 1
+        (item) => item.prize <= filters.maxprize * 1
       );
     }
 
     if (filters.minprize * 1 !== this.state.allPrizes.minprize) {
       afterItems = afterItems.filter(
-        item => item.prize >= filters.minprize * 1
+        (item) => item.prize >= filters.minprize * 1
       );
     }
 
@@ -499,11 +508,11 @@ export default class Productpage extends Component {
     return afterItems;
   }
 
-  handleSort = e => {
+  handleSort = (e) => {
     const sort = e.target.dataset.value;
     this.setState({
       sort,
-      page: 1
+      page: 1,
     });
   };
   render() {
@@ -520,7 +529,7 @@ export default class Productpage extends Component {
     items = items.slice(firstIndex, lastIndex);
 
     const sizes = [...allSizes];
-    const selectSize = sizes.map(item => {
+    const selectSize = sizes.filter(Boolean).map((item) => {
       const checked = this.state.filters.sizes.includes(item);
 
       return (
@@ -539,7 +548,7 @@ export default class Productpage extends Component {
     });
     const arrayProducts = items;
 
-    const listSub = allSubCat.map(item => {
+    const listSub = allSubCat.filter(Boolean).map((item) => {
       const checked = this.state.filters.subcategories.includes(item);
 
       return (
@@ -558,7 +567,7 @@ export default class Productpage extends Component {
       );
     });
 
-    const listColors = allColors.map(item => {
+    const listColors = allColors.filter(Boolean).map((item) => {
       const checked = this.state.filters.colors.includes(item);
 
       return (
@@ -581,9 +590,9 @@ export default class Productpage extends Component {
       ["time", "Od najnowszych"],
       ["time-", "Od najstarszych"],
       ["prize", "Od najtańszych"],
-      ["prize-", "Od najdroższych"]
+      ["prize-", "Od najdroższych"],
     ];
-    const sortList = listOfSorts.map(elmnt => {
+    const sortList = listOfSorts.map((elmnt) => {
       return (
         <li
           onClick={this.handleSort}
@@ -595,13 +604,13 @@ export default class Productpage extends Component {
       );
     });
 
-    const products = arrayProducts.map(item => {
+    const products = arrayProducts.map((item) => {
       const path = `/product/${item.id}`;
       const linkProps = {
         pathname: path,
         state: {
-          item
-        }
+          item,
+        },
       };
 
       return (
@@ -611,10 +620,10 @@ export default class Productpage extends Component {
               <img
                 className="item__imgPicture"
                 src={item.imgSrc[0]}
-                onMouseOver={e => {
+                onMouseOver={(e) => {
                   e.target.src = `${item.imgSrc[1] || item.imgSrc[0]}`;
                 }}
-                onMouseLeave={e => {
+                onMouseLeave={(e) => {
                   e.target.src = item.imgSrc[0];
                 }}
                 alt=""
@@ -633,7 +642,7 @@ export default class Productpage extends Component {
         <div className="filterwg">Filtruj według</div>
         <li className="catalog__mainFilter">
           <div
-            onClick={e => {
+            onClick={(e) => {
               e.target.nextSibling.classList.toggle(
                 "catalog__exapandFilter--open"
               );
@@ -648,7 +657,7 @@ export default class Productpage extends Component {
       <>
         <li className="catalog__mainFilter">
           <div
-            onClick={e => {
+            onClick={(e) => {
               e.target.nextSibling.classList.toggle(
                 "catalog__exapandFilter--open"
               );
@@ -665,15 +674,15 @@ export default class Productpage extends Component {
                 <input
                   className="catalog__minslider"
                   onChange={this.handleMinSlider}
-                  onMouseUp={e => {
+                  onMouseUp={(e) => {
                     e.preventDefault();
                     return this.handleURLSearch();
                   }}
-                  onPointerUp={e => {
+                  onPointerUp={(e) => {
                     e.preventDefault();
                     return this.handleURLSearch();
                   }}
-                  onTouchUp={e => {
+                  onTouchUp={(e) => {
                     e.preventDefault();
                     return this.handleURLSearch();
                   }}
@@ -689,15 +698,15 @@ export default class Productpage extends Component {
                 <input
                   className="catalog__maxslider"
                   onChange={this.handleMaxSlider}
-                  onMouseUp={e => {
+                  onMouseUp={(e) => {
                     e.preventDefault();
                     return this.handleURLSearch();
                   }}
-                  onPointerUp={e => {
+                  onPointerUp={(e) => {
                     e.preventDefault();
                     return this.handleURLSearch();
                   }}
-                  onTouchUp={e => {
+                  onTouchUp={(e) => {
                     e.preventDefault();
                     return this.handleURLSearch();
                   }}
@@ -716,7 +725,7 @@ export default class Productpage extends Component {
       <>
         <li className="catalog__mainFilter">
           <div
-            onClick={e => {
+            onClick={(e) => {
               e.target.nextSibling.classList.toggle(
                 "catalog__exapandFilter--open"
               );
@@ -731,7 +740,7 @@ export default class Productpage extends Component {
       <>
         <li className="catalog__mainFilter">
           <div
-            onClick={e => {
+            onClick={(e) => {
               e.target.nextSibling.classList.toggle(
                 "catalog__exapandFilter--open"
               );
@@ -744,7 +753,7 @@ export default class Productpage extends Component {
         </li>
         <li className="catalog__mainFilter">
           <div
-            onClick={e => {
+            onClick={(e) => {
               e.target.nextSibling.classList.toggle(
                 "catalog__exapandFilter--open"
               );
@@ -757,7 +766,7 @@ export default class Productpage extends Component {
         </li>
         <li className="catalog__mainFilter ">
           <div
-            onClick={e => {
+            onClick={(e) => {
               this.setState(
                 {
                   filters: {
@@ -765,8 +774,8 @@ export default class Productpage extends Component {
                     maxprize: this.state.allPrizes.maxprize,
                     sizes: [],
                     subcategories: [],
-                    colors: []
-                  }
+                    colors: [],
+                  },
                 },
                 this.handleURLSearch
               );
@@ -774,7 +783,7 @@ export default class Productpage extends Component {
                 .querySelector(".catalog__filterList")
                 .classList.toggle("catalog__filterList--open");
               this.setState({
-                page: 1
+                page: 1,
               });
             }}
             className="catalog__mainText catalog__mainFilter--BTNS"
@@ -784,12 +793,12 @@ export default class Productpage extends Component {
         </li>
         <li className="catalog__mainFilter ">
           <div
-            onClick={e => {
+            onClick={(e) => {
               document
                 .querySelector(".catalog__filterList")
                 .classList.toggle("catalog__filterList--open");
               this.setState({
-                page: 1
+                page: 1,
               });
             }}
             className="catalog__mainText catalog__mainFilter--BTNS"
@@ -797,7 +806,7 @@ export default class Productpage extends Component {
             POTWIERDŹ ({itemsLenght})
           </div>
         </li>
-      </>
+      </>,
     ];
     let pathLink;
     let pathName;
@@ -819,10 +828,10 @@ export default class Productpage extends Component {
           {pathName.mainCat}
         </a>
         /<a className="routeText routeText--selected">{pathName.category}</a>
-      </div>
+      </div>,
     ];
 
-    if (this.state.isLoaded) {
+    if (this.state.isLoaded && itemsLenght) {
       return (
         <>
           <div
@@ -860,7 +869,7 @@ export default class Productpage extends Component {
             <div className="mobile">
               <div
                 className="btnFilter"
-                onClick={e => {
+                onClick={(e) => {
                   document
                     .querySelector(".catalog__filterList")
                     .classList.toggle("catalog__filterList--open");
@@ -885,7 +894,7 @@ export default class Productpage extends Component {
             </div>
             <div className="number-page">
               <div
-                onClick={e => {
+                onClick={(e) => {
                   if (this.state.page > 1) {
                     const page = this.state.page - 1;
                     this.setState({ page });
@@ -900,7 +909,7 @@ export default class Productpage extends Component {
                 {this.state.page} z {numberOfPages}
               </div>
               <div
-                onClick={e => {
+                onClick={(e) => {
                   if (this.state.page < numberOfPages) {
                     const page = this.state.page + 1;
                     this.setState({ page });
@@ -909,13 +918,13 @@ export default class Productpage extends Component {
                 }}
                 className="number-page__container"
               >
-                >
+                {">"}
               </div>
             </div>
           </div>
         </>
       );
-    } else
+    } else if (!this.state.isLoaded) {
       return (
         <div className="loadingSite">
           <div class="loading" style={{ position: "absoulte", margin: "auto" }}>
@@ -923,5 +932,22 @@ export default class Productpage extends Component {
           </div>
         </div>
       );
+    } else {
+      return (
+        <>
+          <div className="no-data-container">
+            <div className="no-data">
+              <h1>Brak danych</h1>
+              <h2>
+                Niestety, nie dodaliśmy jeszcze żadnych przedmiotów w tej
+                kategorii :(
+              </h2>
+            </div>
+            <div className="img"></div>
+          </div>
+          <MoreItems />
+        </>
+      );
+    }
   }
 }

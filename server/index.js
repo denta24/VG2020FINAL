@@ -161,7 +161,7 @@ app.get("/api/allOrders", (req, res) => {
           res.json({
             items: items
           });
-          console.log(response);
+        //  console.log(response);
         });
     });
 
